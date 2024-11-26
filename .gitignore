@@ -13,6 +13,7 @@
 
 # Package Files #
 **/*.jar
+!external-services.jar
 !02-external-services/external-services.jar
 **/*.war
 **/*.nar
