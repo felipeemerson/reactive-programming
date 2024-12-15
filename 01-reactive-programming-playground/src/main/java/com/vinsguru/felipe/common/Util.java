@@ -30,6 +30,14 @@ public class Util {
         }
     }
 
+    public static void sleep(Duration duration) {
+        try {
+            Thread.sleep(duration);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static void main(String[] args) {
         var mono = Mono.just(1);
 
