@@ -1,11 +1,15 @@
 package com.vinsguru.felipe.common;
 
 import com.github.javafaker.Faker;
+import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Subscriber;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.Duration;
+import java.util.function.UnaryOperator;
 
+@Slf4j
 public class Util {
 
     private static final Faker faker = Faker.instance();
@@ -36,6 +40,13 @@ public class Util {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static <T> UnaryOperator<Flux<T>> fluxLogger(String name) {
+        return flux -> flux
+                .doOnSubscribe(s -> log.info("subscribing to {}", name))
+                .doOnCancel(() -> log.info("cancelling {}", name))
+                .doOnComplete(() -> log.info("{} completed", name));
     }
 
     public static void main(String[] args) {
